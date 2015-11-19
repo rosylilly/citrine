@@ -1,5 +1,2 @@
-require "./citrine/*"
-
-module Citrine
-  # TODO Put your code here
-end
+require "./citrine/version"
+require "./citrine/node"

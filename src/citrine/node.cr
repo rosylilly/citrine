@@ -1,0 +1,2 @@
+class Citrine::Node
+end
