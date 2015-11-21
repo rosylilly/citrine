@@ -5,3 +5,7 @@ authors:
   - Sho Kusano <rosylilly@aduca.org>
 
 license: MIT
+
+development_dependencies:
+  power_assert:
+    github: rosylilly/power_assert.cr
