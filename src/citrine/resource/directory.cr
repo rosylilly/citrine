@@ -1,14 +1,9 @@
 class Citrine::Resource::Directory < Citrine::Resource
   register_dsl :directory
 
-  @action = :create
-  attribute :action, Symbol
-
-  @path = ""
-  attribute :path, String
-
-  @mode = 0o777
-  attribute :mode, Int32
+  attribute :action, Symbol, default: :create
+  attribute :path, String, default: ""
+  attribute :mode, Int32, default: 0o777
 
   @exists = false
   getter? :exists

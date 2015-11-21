@@ -17,8 +17,10 @@ abstract class Citrine::Resource
     end
   end
 
-  macro attribute(name, type)
+  macro attribute(name, type, default = nil)
     {% name = name.var if name.is_a?(DeclareVar) %}
+
+    @{{name.id}} = {{default}}
 
     def {{name.id}}
       @{{name.id}}
@@ -31,10 +33,33 @@ abstract class Citrine::Resource
     end
   end
 
-  abstract def initialize(*args)
-  abstract def initialize(&block : self ->)
   abstract def plan : String
   abstract def apply!
+
+  attribute :deps, Array(Citrine::Resource), default: [] of Citrine::Resource
+
+  @only_if = nil
+  @not_if = nil
+
+  def only_if(&block : -> Bool)
+    @only_if = block
+  end
+
+  def not_if(&block : -> Bool)
+    @not_if = block
+  end
+
+  def only_if(shell : String, args = nil)
+    only_if do
+      system(shell, args)
+    end
+  end
+
+  def not_if(shell : String, args = nil)
+    not_if do
+      !system(shell, args)
+    end
+  end
 
   def configure(&block)
     with self yield
