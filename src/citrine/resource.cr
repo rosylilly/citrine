@@ -4,13 +4,19 @@ abstract class Citrine::Resource
 
     module ::Citrine::DSL
       def {{name.id}}(*args)
-        {{@type.id}}.new(*args)
+        resource = {{@type.id}}.new(*args)
+
+        Citrine.group_stack.last.push(resource)
+
+        resource
       end
 
       def {{name.id}}(*args, &block)
         resource = {{@type.id}}.new(*args)
 
         with resource yield
+
+        Citrine.group_stack.last.push(resource)
 
         resource
       end
@@ -33,7 +39,7 @@ abstract class Citrine::Resource
     end
   end
 
-  abstract def plan : String
+  abstract def appliable? : Bool
   abstract def apply!
 
   attribute :deps, Array(Citrine::Resource), default: [] of Citrine::Resource

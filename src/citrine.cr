@@ -1,4 +1,5 @@
 require "./citrine/version"
 require "./citrine/node"
 require "./citrine/resource"
+require "./citrine/group"
 require "./citrine/dsl"

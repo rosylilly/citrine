@@ -13,4 +13,15 @@ class Citrine::Resource::Directory < Citrine::Resource
 
   def initialize(@path : String)
   end
+
+  def appliable?
+    @exists ||= Dir.exists?(@path)
+
+    case @action
+    when :create
+      !@exists
+    when :remove
+      @exists
+    end
+  end
 end
