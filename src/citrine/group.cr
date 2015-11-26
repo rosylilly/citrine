@@ -4,7 +4,7 @@ class Citrine::Group < Array(Citrine::Resource | Citrine::Group)
   @name = "default"
   getter :name
 
-  def initialize(name, parent)
+  def initialize(name, parent = nil)
     super()
 
     @name = name.to_s
